@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.GaneshIT.binding.LoginForm;
+import com.GaneshIT.binding.UnlockAccountForm;
 import com.GaneshIT.binding.UserForm;
 import com.GaneshIT.model.CityMasterEntity;
 import com.GaneshIT.model.CountryMasterEntity;
@@ -117,6 +118,34 @@ public class UserServiceImpl implements UserServiceI{
 
 		return randomPassword;
 
+	}
+
+	@Override
+	public boolean unlockAccount(UnlockAccountForm unlockAccountForm) {
+		String email = unlockAccountForm.getEmail();
+		String tempPwd = unlockAccountForm.getTempPwd();
+		UserAccountEntity user = userAccountRepository.findByEmailAndPassword(email, tempPwd);
+		if(user!=null) {
+			user.setAccStatus("UNLOCKED");
+			user.setPassword(unlockAccountForm.getNewPwd());
+			userAccountRepository.save(user);
+			return true;
+		}
+		
+		
+		return false;
+	}
+
+	@Override
+	public String forgotPwd(String email) {
+	
+		UserAccountEntity user = userAccountRepository.findByEmail(email);
+		
+		if(user!=null) {
+			//send mail
+			return "SUCCESS";
+		}
+		return "FAIL";
 	}
 	
 	

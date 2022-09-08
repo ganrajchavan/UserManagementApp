@@ -3,6 +3,7 @@ package com.GaneshIT.service;
 import java.util.Map;
 
 import com.GaneshIT.binding.LoginForm;
+import com.GaneshIT.binding.UnlockAccountForm;
 import com.GaneshIT.binding.UserForm;
 
 public interface UserServiceI {
@@ -16,5 +17,8 @@ public interface UserServiceI {
 	public Map<Integer,String> getCities(Integer stateId);
 
 	public boolean  saveUser(UserForm userForm);
+	
+	public boolean unlockAccount(UnlockAccountForm unlockAccountForm);
 
+	public String forgotPwd(String email);
 }
